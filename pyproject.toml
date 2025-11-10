@@ -1,16 +1,55 @@
-[project]
+[tool.poetry]
 name = "coal-fire-alert-service"
 version = "0.1.0"
-description = ""
-authors = [
-    {name = "Eduard Slobodyanik",email = "slobodyanik.ed@gmail.com"}
-]
+description = "FastAPI-сервис для обнаружения признаков самовозгорания угля с помощью YOLOv11 и уведомления через Telegram (aiogram)."
+authors = ["Eduard Slobodyanik <slobodyanik.ed@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = [
-]
+package-mode = false
 
+[tool.poetry.dependencies]
+python = "^3.12.0,<3.15"
+fastapi = "^0.115"
+uvicorn = { extras = ["standard"], version = "^0.32" }
+httpx = "^0.28"
+# --- torch установлен вручную предварительно---
+torch = { version = "2.2.2", python = "^3.12.0,<3.15" }
+torchvision = { version = "0.17.2", python = "^3.12.0,<3.15" }
+torchaudio = { version = "2.2.2", python = "^3.12.0,<3.15" }
+triton = { version = "^2.0.0", markers = "sys_platform != 'win32' and sys_platform != 'darwin' and platform_machine != 'aarch64' and platform_machine != 'arm64'" }
+
+ultralytics = "^8.3"
+aiogram = "^3.10"
+pydantic = "^2.11"
+environs = "^14.2"
+loguru = "^0.7"
+apscheduler = { extras = ["asyncio"], version = "^3.10" }
+python-multipart = "^0.0.20"
+numpy = ">=1.24.0,<2.0.0"
+
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13"
+black = "^24.10"
+ruff = "^0.8"
+pytest = "^8.3"
+pytest-asyncio = "^0.23"
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
+requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+
+[tool.ruff]
+line-length = 120
+select = ["E", "W", "F", "I", "C", "B", "UP", "RUF", "PL", "PT", "SIM", "ARG", "DTZ", "ISC", "PIE", "PLR", "PT", "RUF", "S", "SIM", "UP", "W", "EXE", "PGH", "G", "PIE", "PL", "PT", "PYI", "RUF", "S", "SIM", "UP", "W", "EXE", "PGH", "G"]
+ignore = ["PLR", "PLW"]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
