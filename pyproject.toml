@@ -24,6 +24,7 @@ environs = "^14.2"
 loguru = "^0.7"
 apscheduler = { extras = ["asyncio"], version = "^3.10" }
 python-multipart = "^0.0.20"
+numpy = ">=1.24.0,<2.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
